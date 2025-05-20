@@ -1,7 +1,8 @@
 package com.application.service.impl;
 
-import com.application.dto.LoginRequest;
+
 import com.application.dto.ForgotPasswordRequest;
+import com.application.dto.LoginRequest;
 import com.application.entity.User;
 import com.application.repository.UserRepository;
 import com.application.service.AuthService;
@@ -9,7 +10,6 @@ import com.application.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
