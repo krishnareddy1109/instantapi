@@ -1,0 +1,39 @@
+name: Bi-Directional Branch Sync
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write  # 👈 Required to allow pushing changes
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Fetch all remote branches
+      run: git fetch --all
+
+    - name: Configure Git identity
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+    - name: Merge master into krishna
+      run: |
+        git checkout krishna || git checkout -b krishna origin/krishna
+        git merge origin/master --no-edit || echo "Merge conflict in krishna, skipping"
+        git push origin krishna
+
+    - name: Merge master into naveen
+      run: |
+        git checkout naveen || git checkout -b naveen origin/naveen
+        git merge origin/master --no-edit || echo "Merge conflict in naveen, skipping"
+        git push origin naveen
