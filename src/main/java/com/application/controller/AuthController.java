@@ -1,6 +1,7 @@
 package com.application.controller;
 
 import com.application.dto.LoginRequest;
+import com.application.dto.LoginResponse;
 import com.application.dto.ForgotPasswordRequest;
 import com.application.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,11 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        String token = authService.login(request);
+        return ResponseEntity.ok(new LoginResponse(token));
     }
+
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
